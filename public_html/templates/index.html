@@ -1,0 +1,49 @@
+<div class="row upperpadding">
+	<div class="col-12">
+		<div class="row">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+				<div class="card">
+					<div class="card-header">
+						<strong>Meetings summary</strong>
+					</div>
+					<div class="card-body">
+						<div id = "meetingsgraph" style = "width: auto; height: 250px; margin: 0 auto"></div>
+					</div>
+				</div>			
+			</div>
+			<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+				<div class="card">
+					<div class="card-header">
+						<strong>Customers summary</strong>
+					</div>
+					<div class="card-body">
+						<div id = "customergraph" style = "width: auto; height: 250px; margin: 0 auto"></div>
+					</div>
+				</div>			
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row upperpadding">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+        <div class="card backgroundchange" style="font-size: 50px;">
+            <div class="card-header">
+                <strong>Total Investments</strong>
+            </div>
+            <div class="card-body">
+                <strong class="card-title" >{{totalI | currency: '₹ '}}</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+        <div class="card">
+            <div class="card-header">
+                <strong>Investments summary</strong>
+            </div>
+            <div class="card-body">
+                
+                <div id = "investmentgraph" style = "width: auto; height: 250px; margin: 0 auto"></div>
+            </div>
+        </div>
+    </div>
+</div>

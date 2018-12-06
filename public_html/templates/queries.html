@@ -1,0 +1,121 @@
+<div class="row upperpadding">
+	<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+		<div class="card h-100">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-9">
+						<strong class="card-title" style="font-size: 30px;">Customer Details</strong>
+					</div>
+				</div>
+      		</div> 
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Name</th>
+								<td>{{customerwithqueries.name}}</td>
+								<th>City</th>
+								<td>{{customerwithqueries.city}}</td>
+							</tr>
+							<tr>
+								<th>Type</th>
+								<td>Investor</td>
+								<th>Contact</th>
+								<td>{{customerwithqueries.contact}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-9">
+	        			<strong class="card-title" style="font-size: 30px;">Queries Graphical Summary</strong>
+	        		</div>
+	        		<div class="col-3">
+						<a href="#!/customers"  class="btn btn-warning" style="float: right; background-color: white; color: black; margin-top: 10px;"><i class="fa fa-arrow-left"></i> Back</a>
+					</div>
+				</div>
+				
+      		</div> 
+			<div class="card-body">
+				<div id ="queryGraph" class="w-100" style="height: 166px;"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row upperpadding">
+	<div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-6">
+						<strong class="card-title" style="font-size: 30px;">Query Details</strong>
+					</div>
+					<div class="col-6">
+						<input type="text" style="float: right;" class="form-control" placeholder="Search" ng-model="qsearch">
+					</div>
+				</div>
+      		</div> 
+			<div class="card-body">
+				<div>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>No.</th>
+								<th>Type</th>
+								<th>Query Date</th>
+								<th>Query Details</th>
+								<th>Query Solved Date</th>
+								<th>If Gap, Reason</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="q in customerwithqueries.queries | filter: qsearch" id="query{{q.id}}" ng-click="editQuery(q)" ng-class="q.id==selected?'selected':''">
+								<td>{{$index+1}}</td>
+								<td>{{q.q_type}}</td>
+								<td>{{q.q_date | date : "yyyy-MM-dd hh:mm:ss"}}</td>
+								<td>{{q.q_details}}</td>
+								<td>{{q.q_solved_date | date : "yyyy-MM-dd hh:mm:ss"}}</td>
+								<td>
+									<textarea disabled="disabled" rows="2" style="width: 100%;" class="form-control">{{q.q_gap_reason}}</textarea>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-sm-12 col-md-12 col-lg-3 col-xl-3">
+		<div class="card subbackgroundchange">
+			<div class="card-body">
+				<form name="queryForm" ng-submit="addQuery()">
+						<div class="form-group">
+							<select class="form-control"
+								name="q_type"
+								ng-init="query.q_type='Open'"
+								ng-model="query.q_type"
+	 							ng-options="qt for qt in qtList"
+	 							ng-required="true">
+	 						</select>
+						</div>
+			 			<div class="form-group">
+			 				<input type="text" name="q_details" ng-model="query.q_details" class="form-control" placeholder="* Query details" ng-required="true" maxlength="500">
+			 			</div>
+			 			<div class="form-group">
+			 				<textarea rows="6" name="q_gap_reason" ng-model="query.q_gap_reason" class="form-control" placeholder="If gap, reasons"></textarea>
+			 			</div>
+			 			<button type="submit" class="btn btn-success">Submit</button>
+			 			<button type="button" class="btn btn-danger" ng-click="resetQuery()">Reset</button>
+					</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="snackbar">{{queriesnotification}}</div>

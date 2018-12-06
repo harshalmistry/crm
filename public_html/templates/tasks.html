@@ -1,0 +1,115 @@
+<div class="row upperpadding">
+	<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-4">
+						<strong class="card-title" style="font-size: 30px;">Tasks Details</strong>
+					</div>
+					<div class="col-8">
+						<div class="row">
+							<div class="col-3 custom-control custom-radio">
+								<input type="radio" class="custom-control-input" id="ts_open" name="taskstatus" checked ng-model="tasearch" value="Open">
+								<label class="custom-control-label" for="ts_open"> Open</label>
+							</div>
+							<div class="col-3 custom-control custom-radio">
+								<input type="radio" class="custom-control-input" id="ts_in_progress" name="taskstatus" ng-model="tasearch" value="In Progress">
+								<label class="custom-control-label" for="ts_in_progress"> In Progress</label>
+							</div>
+							<div class="col-3 custom-control custom-radio">
+								<input type="radio" class="custom-control-input" id="ts_completed" name="taskstatus" ng-model="tasearch" value="Completed">
+								<label class="custom-control-label" for="ts_completed"> Completed</label>
+							</div>
+							<div class="col-3">
+								<input type="text" style="float: right;" class="form-control" placeholder="Search" ng-model="tasearch">			
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<div>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Task start date</th>
+								<th>Task brief</th>
+								<th>Task details</th>
+								<th>Task deadline (Days)</th>
+								<th>Task status</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="t in tasks | filter: tasearch" ng-class="t.id==selected?'selected': t.t_status=='Open'? 'text-danger': t.t_status=='In Progress'? 'text-info' : t.t_status=='Completed'? 'text-success' : ''" ng-click="editTask(t)">
+								<td>{{$index+1}}</td>
+								<td>{{t.t_start_date}}</td>
+								<td>{{t.t_brief}}</td>
+								<td>{{t.t_details}}</td>
+								<td>{{t.t_deadline}}</td>
+								<td>{{t.t_status}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="blockquote-footer text-center">
+					<span class="bg-success">1</span> Task Completed
+					<span class="bg-info">1</span> Task in progress
+					<span class="bg-danger">1</span> Task open
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body">
+						<div id = "tasksgraph" style = "width: auto; height: 250px; margin: 0 auto"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row upperpadding">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-body subbackgroundchange">
+						<form name="taskForm" ng-submit="aeTask()">
+							<div class="form-group">
+								<input type="text" name="t_brief" ng-model="task.t_brief" ng-required="true" class="form-control" placeholder="* Task brief" maxlength="200">
+							</div>
+							<div class="form-group">
+								<label for="t_deadline">Task status</label>
+								<select class="form-control"
+									name="t_status"
+									ng-init="task.t_status='Open'"
+									ng-model="task.t_status"
+		 							ng-options="ts for ts in taskStatus"
+		 							ng-required="true"
+		 							placeholder="* Task status">
+	 							</select>
+							</div>
+							<div class="form-group">
+								<textarea rows="3" name="t_details" ng-model="task.t_details" class="form-control" placeholder="Task details" maxlength="5000"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="t_deadline">Task deadline (Days)</label>
+								<select class="form-control"
+									name="t_deadline"
+									ng-init="task.t_deadline=1"
+									ng-model="task.t_deadline"
+		 							ng-options="td for td in taskDeadline"
+		 							ng-required="true"
+		 							placeholder="* Task deadline">
+	 							</select>
+							</div>
+							<button type="submit" class="btn btn-success">Submit</button>
+							<button type="button" class="btn btn-danger" ng-click="resetTask()">Reset</button>
+						</form>	
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="snackbar">{{tasksnotification}}</div>

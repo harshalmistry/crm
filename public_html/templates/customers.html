@@ -1,0 +1,87 @@
+<div class="row upperpadding">
+	<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+		<div class="card">
+			<div id = "customergraph" class="w-100 h-100" style="height: 350px !important;"></div>
+		</div>
+	</div>
+	<div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6">
+		<div class="card subbackgroundchange">
+      		<div class="card-body">
+				<form name="customerForm" ng-submit="addCustomer()">
+					<div class="form-group">
+		 				<input type="text" name="name" class="form-control" ng-model="customer.name" placeholder="* Customer Name" ng-required="true">
+		 			</div>
+		 			<div class="form-group">
+						<select name="type" class="form-control"
+							ng-init="customer.type='P'"
+ 							ng-model="customer.type"
+ 							ng-options="type.id as type.name for type in typeList">
+ 						</select>
+ 					</div>
+		 			<div class="form-group">
+		 				<input type="text" name="city" class="form-control" ng-model="customer.city" placeholder="Customer City">
+		 			</div>
+		 			<div class="form-group">
+						<input type="text" name="contact" class="form-control" ng-model="customer.contact" placeholder="* Customer Contact" ng-required="true" ng-pattern="/^(\+\d{1,3}[- ]?)?\d{10}$/" maxlength="10">	
+		 			</div>
+		 			<div class="form-group">
+ 						<input type="email" name="email" class="form-control" ng-model="customer.email" placeholder="Customer Email">
+ 					</div>
+		 			<button type="submit" class="btn btn-success">Submit</button>
+		 			<button type="button" class="btn btn-danger" ng-click="resetCustomer()">Reset</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row upperpadding">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-6">
+						<strong style="font-size: 30px;">Customer Details</strong>
+					</div>
+					<div class="col-6">
+						<input type="text" style="float: right;" class="form-control" placeholder="Search customer" ng-model="csearch">
+					</div>
+				</div>
+      		</div> 
+			<div class="card-body">
+				<div class="table-responsive">
+					<table id="customerTable" class="table table-hover">
+						<thead>
+							<tr>
+								<th>No.</th>
+								<th>Name</th>
+								<th>Type</th>
+								<th>City</th>
+								<th>Contact</th>
+								<th>Email</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="c in customers | filter: csearch" ng-class="c.id==selected?'selected':''">
+								<td ng-click="editCustomer(c)">{{$index+1}}</td>
+								<td ng-click="editCustomer(c)">{{c.name}}</td>
+								<td ng-click="editCustomer(c)">{{c.type}}</td>
+								<td ng-click="editCustomer(c)">{{c.city}}</td>
+								<td ng-click="editCustomer(c)">{{c.contact}}</td>
+								<td ng-click="editCustomer(c)">{{c.email}}</td>
+								<td>
+									<i class="fa fa-remove gutter" title="Delete customer" ng-click="deleteCustomer(c.id, c.name)"></i>
+									<i ng-if="c.type == 'I'" class="fa fa-money gutter" title="Existing customer transactions" ng-click="goTo('/transactions', c.id)"></i>
+									<i ng-if="c.type == 'I'" class="fa fa-question gutter" title="Queries from existing customer" ng-click="goTo('/queries',c.id)"></i>
+  									<i ng-if="c.type == 'I'" class="fa fa-briefcase gutter" title="Review existing customer portfolio" ng-click="goTo('/portfolio', c.id)"></i>
+  									<i ng-if="c.type == 'P'" class="fa fa-blind gutter" title="Follow up with Prospects customer" ng-click="goTo('/followup', c.id)"></i>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="snackbar">{{customernotification}}</div>

@@ -1,0 +1,66 @@
+<div class="row upperpadding">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-12">
+						<strong style="font-size: 20px;">Meeting details</strong>
+					</div>
+				</div>
+				</div> 
+			<div class="card-body">
+				<div class="row">
+					<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+						<div id = "meetingsgraph" style = "width: auto; height: 500px; margin: 0 auto"></div>
+					</div>
+					<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 table-responsive">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Month</th>
+									<th>No of Meetings</th>
+									<th></th>
+								</tr>
+								<tr>
+									<th>	
+										<div class="form-group">
+											<select name="month" class="form-control"
+					 							ng-model="meeting.month"
+					 							ng-options="m for m in monthList"
+					 							ng-required="true"
+					 							ng-change="monthChanged()">
+					 							<option value=''>Select</option>
+					 						</select>
+										</div>													
+									</th>
+									<th>
+										<div class="form-group">
+											<input type="number" name="nos" class="form-control" ng-required="true" ng-model="meeting.nos" min=0 max=100>
+										</div>													
+									</th>
+									<th style="vertical-align: top;">
+										<button type="button" ng-click="addMeeting()" class="btn backgroundchange"><i class="fa fa-refresh"></i></button>								
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="m in meetings" ng-class="m.mn==selected? 'selected': ''">
+									<td ng-click="monthClicked(m.mn)">{{m.mn}}</td>
+									<td ng-click="monthClicked(m.mn)">{{m.nos}}</td>
+									<td>
+  										<i class="fa fa-remove" ng-click="resetMeetings(m.mn)" title="Reset to 0"></i>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="blockquote-footer text-center">
+					Above is graphical and tabular representation of meetings conducted by you in current year.
+					<br>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="snackbar">{{meetingnotification}}</div>
