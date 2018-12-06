@@ -1,0 +1,63 @@
+<div class="modal fade">  
+  <div class="modal-dialog">  
+    <div class="modal-content">  
+      <div class="modal-header" style="display: flow-root;">  
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>  
+        <h5 class="modal-title">Add New Client Profile</h5>  
+        <small>*All fields are mandatory</small>
+      </div>  
+      <div class="modal-body">
+        <div class="card card-outline-secondary">
+            <div class="card-body">
+              <form class="form" role="form" name="profileForm" novalidate>
+                  <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label">Name</label>
+                      <div class="col-lg-9">
+                          <input class="form-control" type="text" ng-model="user.name" name="name" required ng-class="{ 'has-error' : profileForm.name.$invalid && !profileForm.name.$pristine }">
+                          <!-- <p ng-show="profileForm.name.$invalid && !profileForm.name.$pristine" style="color:red;">Name is required.</p> -->
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label">Imp. Date</label>
+                      <div class="col-lg-9">
+                          <input class="form-control" type="text" ng-model="user.imp_date" required>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                      <div class="col-lg-9">
+                          <input class="form-control" type="email" ng-model="user.email" required>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label">Type</label>
+                      <div class="col-lg-9">
+                          <input class="form-control" type="text" ng-model="user.type" required>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label">City</label>
+                      <div class="col-lg-9">
+                          <input class="form-control" type="text" ng-model="user.city" required>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label">Contact</label>
+                      <div class="col-lg-9">
+                          <input class="form-control" type="text" ng-model="user.contact" required>
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-lg-3 col-form-label form-control-label"></label>
+                      <div class="col-lg-9">
+                          <button type="submit" ng-click="submitProfile()" class="btn button">Save</button>
+                          <button ng-click="resetProfile()" class="btn btn-default">Reset</button>
+                      </div>
+                  </div>
+                </form>
+            </div>
+        </div>
+      </div>  
+    </div>  
+  </div>  
+</div>

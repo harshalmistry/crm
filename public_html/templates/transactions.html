@@ -1,0 +1,167 @@
+<div class="row upperpadding">
+	<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-9">
+						<strong class="card-title" style="font-size: 30px;">Customer Details</strong>
+					</div>
+					<div class="col-3">
+						<a href="#!/customers"  class="btn btn-warning" style="float: right; background-color: white; color: black; margin-top: 10px;"><i class="fa fa-arrow-left"></i> Back</a>
+					</div>
+				</div>
+      		</div> 
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Name</th>
+								<td>{{customerwithtransactions.name}}</td>
+								<th>City</th>
+								<td>{{customerwithtransactions.city}}</td>
+							</tr>
+							<tr>
+								<th>Type</th>
+								<td>Investor</td>
+								<th>Contact</th>
+								<td>{{customerwithtransactions.contact}}</td>
+							</tr>
+							<!-- <tr>
+								<th><span style="color: red;">*</span> Referenced By</th>
+								<td>
+									<input type="text" class="form-control autocomplete" ng-model="selected" typeahead="state for state in states | filter:$viewValue">
+								</td>
+								<td></td>
+								<td>
+									<button class="btn backgroundchange">Update</button>
+								</td>
+							</tr> -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+		<div class="card h-100">
+			<div class="card-header h-100 backgroundchange">
+				<strong class="card-title text-white" style="font-size: 35px;">Total Investment</strong>
+			</div>
+			<div class="card-body">
+				<strong class="card-title" style="font-size: 50px;">{{totalInvestment | currency: '₹ '}}</strong>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row upperpadding">
+	<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-5">
+						<strong class="card-title" style="font-size: 30px;">Transactions Details</strong>
+					</div>
+					<div class="col-7">
+						<input type="text" style="float: right;" class="form-control" placeholder="Search" ng-model="tsearch">			
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<div>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Transaction date</th>
+								<th>Scheme name</th>
+								<th>Investment type</th>
+								<th>Transaction amount(₹)</th>
+								<th>KYC status</th>
+								<th>Next transaction date</th>
+								<th>Courier done</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="t in customerwithtransactions.transactions | filter : tsearch" ng-click="editTransaction(t)" ng-class="t.id==selected?'selected':''">
+								<td>{{$index+1}}</td>
+								<td>{{t.t_date}}</td>
+								<td>{{t.scheme_name}}</td>
+								<td>{{t.investment_type}}</td>
+								<td>{{t.t_amount | currency:"₹"}}</td>
+								<td>{{t.kyc_status}}</td>
+								<td>{{t.next_t_date}}</td>
+								<td>{{t.courier_done}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+		<div class="card subbackgroundchange">
+			<div class="card-body">
+				<form name="transactionForm" id="transactionForm" ng-submit="aeTransaction()" ng-init="transaction.kyc_status='No'; transaction.courier_done='No'">
+					<div class="form-group">
+						<input type="text" name="t_date" ng-model="transaction.t_date" placeholder="* Transaction date" class="form-control" ng-required="true" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+					</div>
+					<div class="form-group">
+						<input type="text" name="scheme_name" ng-model="transaction.scheme_name" placeholder="* Scheme name" ng-required="true" class="form-control">
+					</div>
+					<div class="form-group">
+						<select class="form-control"
+								name="investment_type"
+								ng-model="transaction.investment_type"
+	 							ng-options="it for it in itList"
+	 							ng-required="true"
+	 							placeholder="* Investment type">
+	 							<option value=''>Select</option>
+	 					</select>
+					</div>
+					<div class="form-group">
+						<input type="number" name="t_amount" ng-model="transaction.t_amount" placeholder="* Transaction amount" class="form-control" min=0 ng-required="true">
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-6">
+								<div class="custom-control custom-radio">
+  									<input type="radio" class="custom-control-input" id="kycyes" name="kycradios" ng-model="transaction.kyc_status" value="Yes">
+  									<label class="custom-control-label" for="kycyes">KYC Yes</label>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="custom-control custom-radio">
+  									<input type="radio" class="custom-control-input" id="kycno" name="kycradios" checked ng-model="transaction.kyc_status" value="No">
+  									<label class="custom-control-label" for="kycno">KYC No</label>
+								</div>
+							</div>
+						</div>						
+					</div>
+					<div class="form-group">
+						<input type="text" name="next_t_date" ng-model="transaction.next_t_date" placeholder="* Next Transaction Date" class="form-control" ng-required="true" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-6">
+								<div class="custom-control custom-radio">
+  									<input type="radio" class="custom-control-input" id="courieryes" name="courierradios" ng-model="transaction.courier_done" value="Yes">
+  									<label class="custom-control-label" for="courieryes">Courier Yes</label>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="custom-control custom-radio">
+  									<input type="radio" class="custom-control-input" id="courierno" name="courierradios" checked ng-model="transaction.courier_done" value="No">
+  									<label class="custom-control-label" for="courierno">Courier No</label>
+								</div>
+							</div>
+						</div>						
+					</div>
+					<button type="submit" class="btn btn-success">Submit</button>
+					<button type="button" class="btn btn-danger" ng-click="resetTransaction()">Reset</button>
+				</form>
+			</div>
+		</div>	
+	</div>
+</div>
+<div id="snackbar">{{transactionnotification}}</div>

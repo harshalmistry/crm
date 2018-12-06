@@ -1,0 +1,43 @@
+<div class="table-responsive-sm">
+	<div ng-if="!flag" id="profilesgeterror" class="alert alert-danger" style="margin-top: 10px;padding: 20px 20px 30px 20px;">
+    	<strong>No profile data found</strong>
+    	<button class="btn btn-primary button buttonsmargin" ng-click="addNewProfile()" style="float: right;">Add</button>
+	</div>
+	<table ng-if="flag" class="table table-striped">
+		<thead>
+			<tr>
+				<th>No.</th>
+				<th>Name</th>
+				<th>Imp. Date</th>
+				<th>Email</th>
+				<th>Type</th>
+				<th>City</th>
+				<th>Contact</th>
+				<th style="width: 20%;">
+					<span style="display: inline-flex; float: right;">
+						<input type="text" style="margin-right: 5px;" class="form-control" placeholder="Search" ng-model="search">
+						<button class="btn btn-primary button buttonsmargin" ng-click="addNewProfile()">Add</button>
+					</span>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="p in profiles | filter: search" id="profilerow{{p.id}}">
+				<td>{{$index+1}}</td>
+				<td>{{p.name}}</td>
+				<td>{{p.imp_date}}</td>
+				<td>{{p.email}}</td>
+				<td>{{p.type}}</td>
+				<td>{{p.city}}</td>
+				<td>{{p.contact}}</td>
+				<td>
+					<!-- <a href="#!queries/{{p.id}}" class="btn btn-info buttonsmargin" style="float: right;">Queries</a> -->
+					<button class="btn btn-danger buttonsmargin" style="float: right;" ng-click="deleteCrmProfile(p.id, p.name)">Delete</button>
+					<button class="btn btn-success buttonsmargin" style="float: right;" ng-click="editCrmProfile(p.id, p.name)">Edit</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<modal visible="showModal">	    
+	</modal>
+</div>

@@ -1,0 +1,101 @@
+<div class="row upperpadding">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-9">
+						<strong style="font-size: 30px;">Customer Details</strong>
+					</div>
+					<div class="col-3">
+						<a href="#!/customers"  class="btn btn-warning" style="float: right; background-color: white; color: black; margin-top: 10px;"><i class="fa fa-arrow-left"></i> Back</a>
+					</div>
+				</div>
+      		</div> 
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Name</th>
+								<td>{{customerwithfollowups.name}}</td>
+								<th>City</th>
+								<td>{{customerwithfollowups.city}}</td>
+							</tr>
+							<tr>
+								<th>Type</th>
+								<td>Prospect</td>
+								<th>Contact</th>
+								<td>{{customerwithfollowups.contact}}</td>
+							</tr>
+							<!-- <tr>
+								<th><span style="color: red;">*</span> Referenced By</th>
+								<td>
+									<input type="text" class="form-control autocomplete" ng-model="selected" typeahead="state for state in states | filter:$viewValue">
+								</td>
+								<td></td>
+								<td>
+									<button class="btn backgroundchange">Update</button>
+								</td>
+							</tr> -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row upperpadding">
+	<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-6">
+						<strong class="card-title" style="font-size: 30px;">Followup Details</strong>
+					</div>
+					<div class="col-6">
+						<input type="text" style="float: right;" class="form-control" placeholder="Search" ng-model="fsearch">			
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<div>
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Followup date</th>
+								<th>Followup details</th>
+								<th>Next followup date</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="f in customerwithfollowups.followups | filter : fsearch" ng-click="editFollowup(f)" ng-class="f.id==selected?'selected':''">
+								<td>{{$index+1}}</td>
+								<td>{{f.m_date}}</td>
+								<td>{{f.m_details}}</td>
+								<td>{{f.m_next_date}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
+		<div class="card subbackgroundchange">
+			<div class="card-body">
+				<form name="followupForm" id="followupForm" ng-submit="aeFollowup()">
+					<div class="form-group">
+						<textarea rows="8" name="m_details" ng-model="followup.m_details" placeholder="* Follow up details" ng-required="true" class="form-control"></textarea>
+					</div>
+					<div class="form-group">
+						<input type="text" name="m_next_date" ng-model="followup.m_next_date" placeholder="* Follow up date" class="form-control" ng-required="true" onfocus="(this.type='date')" onfocusout="(this.type='text')">
+					</div>
+					<button type="submit" class="btn btn-success">Submit</button>
+					<button type="button" class="btn btn-danger" ng-click="resetFollowup()">Reset</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="snackbar">{{followupnotification}}</div>
